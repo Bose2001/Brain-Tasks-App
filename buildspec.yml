@@ -4,17 +4,14 @@ phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
-      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 767124094876.dkr.ecr.us-east-1.amazonaws.com
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 558902135917.dkr.ecr.us-east-1.amazonaws.com
   build:
     commands:
       - echo Building the Docker image...
       - docker build -t brain-tasks-app .
-      - docker tag brain-tasks-app 767124094876.dkr.ecr.us-east-1.amazonaws.com/brain-tasks-app
+      - docker tag brain-tasks-app 558902135917.dkr.ecr.us-east-1.amazonaws.com/brain-tasks-app
   post_build:
     commands:
       - echo Pushing the Docker image...
-      - docker push 767124094876.dkr.ecr.us-east-1.amazonaws.com/brain-tasks-app
-      - echo Updating kubeconfig and deployment...
-      - aws eks update-kubeconfig --region us-east-1 --name brain-tasks-cluster
-      - kubectl set image deployment/brain-tasks-app brain-tasks-app=767124094876.dkr.ecr.us-east-1.amazonaws.com/brain-tasks-app
-      - kubectl rollout status deployment/brain-tasks-app
+      - docker push 558902135917.dkr.ecr.us-east-1.amazonaws.com/brain-tasks-app
+      - echo Skipping update-kubeconfig. Use separate CD step or Lambda for EKS deployment.
